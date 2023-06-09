@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
 class CollectionAdapter(private val cards: MutableList<MtgCard>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    private val loader = MtgApi();
+    private val loader = MtgApi()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
         return CollectionViewHolder(
@@ -46,7 +46,7 @@ class CollectionAdapter(private val cards: MutableList<MtgCard>): RecyclerView.A
         MainScope().launch {
             val card = loader.getCardByName("Archangel Avacyn")
             if (card != null) {
-                cards.add(card)
+                cards.addAll(card)
             }
             notifyItemInserted(cards.size - 1)
         }

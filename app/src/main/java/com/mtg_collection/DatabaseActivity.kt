@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.annotation.RestrictTo.Scope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.magicthegathering.kotlinsdk.model.card.MtgCard
+import kotlinx.coroutines.*
+import kotlin.concurrent.thread
 
 class DatabaseActivity : AppCompatActivity() {
 
     private lateinit var databaseAdapter: DatabaseAdapter
+    val loader = MtgApi()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +26,17 @@ class DatabaseActivity : AppCompatActivity() {
 
     @SuppressLint("MissingInflatedId")
     fun cardSearch(view: View){
-        //list from API
-        val etCardName = findViewById<EditText>(R.id.etCardName)
-
-        var cards: MutableList<Card> = mutableListOf(Card(1,etCardName.text.toString()), Card(2,etCardName.text.toString()), Card(3, etCardName.text.toString()))
-
-        setContentView(R.layout.card_search)
-
-        databaseAdapter = DatabaseAdapter(cards)
-        val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItemsI)
-        rvCardItems.adapter = databaseAdapter
-        rvCardItems.layoutManager = LinearLayoutManager(this)
+        thread {
+            val etCardName = findViewById<EditText>(R.id.etCardName)
+            val cards = loader.getCardByName(etCardName.text.toString())
+            setContentView(R.layout.card_search)
+            if (cards != null) {
+                databaseAdapter = DatabaseAdapter(cards)
+                val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItemsI)
+                rvCardItems.adapter = databaseAdapter
+                rvCardItems.layoutManager = LinearLayoutManager(applicationContext)
+            }
+        }
     }
 
     fun goBack(view: View){

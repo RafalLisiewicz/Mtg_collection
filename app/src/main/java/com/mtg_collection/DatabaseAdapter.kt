@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import io.magicthegathering.kotlinsdk.model.card.MtgCard
 
-class DatabaseAdapter (private val cards: MutableList<Card>): RecyclerView.Adapter<DatabaseAdapter.DatabaseViewHolder>() {
+class DatabaseAdapter (private val cards: List<MtgCard>): RecyclerView.Adapter<DatabaseAdapter.DatabaseViewHolder>() {
 
     class DatabaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

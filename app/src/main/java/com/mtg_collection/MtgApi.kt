@@ -9,14 +9,16 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.util.Collections.addAll
 import kotlin.concurrent.thread
 
 class MtgApi{
 
-    fun getCardByName(name: String): MtgCard? {
-        var card: MtgCard? = null
-        val cardResponse: Response<List<MtgCard>> = MtgCardApiClient.getCardsByPartialName(name, 1, 0)
-        card = cardResponse.body()?.get(0)
-        return card
+    fun getCardByName(name: String): List<MtgCard>? {
+        var cards: List<MtgCard>? = null
+            val cardResponse: Response<List<MtgCard>> =
+                MtgCardApiClient.getCardsByPartialName(name, 10, 0)
+            cards = cardResponse.body()
+        return cards
     }
 }
