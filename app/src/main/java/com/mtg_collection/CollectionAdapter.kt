@@ -1,17 +1,20 @@
 package com.mtg_collection
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import io.magicthegathering.kotlinsdk.model.card.MtgCard
+import kotlinx.coroutines.*
 
-class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
+class CollectionAdapter(private val cards: MutableList<MtgCard>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    private val loader = MtgApi();
 
-    private var i: Int = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
         return CollectionViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -38,11 +41,15 @@ class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adap
         notifyItemRemoved(cards.size)
     }
 
-    fun addCard() {//TODO move to database
-        val card = Card(123, "Hallal"+i)
-        i++
-        cards.add(card)
-        notifyItemInserted(cards.size - 1)
+    @SuppressLint("MissingInflatedId")
+    fun addCard(){//TODO move to database
+        MainScope().launch {
+            val card = loader.getCardByName("Archangel Avacyn")
+            if (card != null) {
+                cards.add(card)
+            }
+            notifyItemInserted(cards.size - 1)
+        }
     }
 
     override fun getItemCount(): Int {

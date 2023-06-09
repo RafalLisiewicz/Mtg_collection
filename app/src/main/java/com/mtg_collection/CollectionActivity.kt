@@ -1,20 +1,27 @@
 package com.mtg_collection
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.magicthegathering.kotlinsdk.model.card.MtgCard
+
 
 class CollectionActivity : AppCompatActivity() {
 
     private lateinit var collectionAdapter: CollectionAdapter
-    private lateinit var cards: MutableList<Card>
+    private lateinit var cards: MutableList<MtgCard>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection)
+
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         cards = mutableListOf()
 
@@ -30,7 +37,7 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     fun addCard(view: View){
-        collectionAdapter.addCard()
+            collectionAdapter.addCard()
     }
 
     fun goBack(view: View){
