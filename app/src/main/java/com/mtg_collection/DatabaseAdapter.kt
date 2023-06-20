@@ -29,12 +29,12 @@ class DatabaseAdapter (private val cards: List<MtgCard>): RecyclerView.Adapter<D
         holder.itemView.apply {
             val cardName = findViewById<TextView>(R.id.tvCardNameI)
             cardName.text = curCard.name
-            val image = findViewById<ImageView>(R.id.imageViewI);
-                GlideApp
-                    .with(image.context)
-                    .load(curCard.imageUrl)
-                    .centerCrop()
-                    .into(image);
+            val image = findViewById<ImageView>(R.id.imageViewI)
+            GlideApp
+                .with(image.context)
+                .load(curCard.imageUrl)
+                .centerCrop()
+                .into(image);
         }
     }
 
