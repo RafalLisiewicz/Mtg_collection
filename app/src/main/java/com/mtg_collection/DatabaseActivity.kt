@@ -32,6 +32,8 @@ class DatabaseActivity : AppCompatActivity() {
             val cards = loader.getCardByName(etCardName.text.toString())
             setContentView(R.layout.card_search)
             if (cards != null) {
+                val cards = cards.toMutableList()
+                cards.removeAll {it.imageUrl == null}
                 databaseAdapter = DatabaseAdapter(cards)
                 val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItemsI)
                 rvCardItems.adapter = databaseAdapter
