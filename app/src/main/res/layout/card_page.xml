@@ -31,7 +31,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.04" />
+            app:layout_constraintVertical_bias="0.04"
+            android:textColor="@color/black" />
 
     <ImageView
             android:id="@+id/imageView2"
@@ -68,7 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Set"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
             <TextView
                     android:id="@+id/tvSet"
@@ -76,7 +78,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -90,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Rarity"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
             <TextView
                     android:id="@+id/tvRarity"
@@ -98,7 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +117,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Type"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
             <TextView
                     android:id="@+id/tvType"
@@ -120,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +141,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Power/Toughness"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
             <TextView
                     android:id="@+id/tvPower"
@@ -142,7 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -155,14 +164,16 @@
                     android:layout_width="174dp"
                     android:layout_height="wrap_content"
                     android:text="Mana cost:"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
             <TextView
                     android:id="@+id/tvMana"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -175,13 +186,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Description"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
             <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@color/black" />
 
         </LinearLayout>
 
