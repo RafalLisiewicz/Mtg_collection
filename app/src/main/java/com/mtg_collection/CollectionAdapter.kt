@@ -2,6 +2,7 @@ package com.mtg_collection
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import io.magicthegathering.kotlinsdk.model.card.MtgCard
 import kotlinx.coroutines.*
 
-class CollectionAdapter(private val cards: MutableList<MtgCard>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
+class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    private val loader = MtgApi()
+    private var onClickListener: CollectionAdapter.OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
         return CollectionViewHolder(
@@ -31,25 +32,32 @@ class CollectionAdapter(private val cards: MutableList<MtgCard>): RecyclerView.A
             val cardName = findViewById<TextView>(R.id.tvCardName)
             cardName.text = curCard.name
         }
-    }
-
-    fun deleteCard() { //TODO checked card
-        if(cards.size > 0) {
-            val card = cards[cards.size - 1]
-            cards.remove(card)
-        }
-        notifyItemRemoved(cards.size)
-    }
-
-    @SuppressLint("MissingInflatedId")
-    fun addCard(){//TODO move to database
-        MainScope().launch {
-            val card = loader.getCardByName("Archangel Avacyn")
-            if (card != null) {
-                cards.addAll(card)
+        holder.itemView.setOnClickListener {
+            if(onClickListener != null){
+                onClickListener!!.onClick(position, curCard)
             }
-            notifyItemInserted(cards.size - 1)
         }
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, card: Card)
+    }
+
+    fun deleteCard(context: Context, card: Card) {
+        val db = CardDB.getInstance(context)
+        val dao = db.cardDao()
+        dao.delete(card)
+        cards.remove(card)
+        notifyDataSetChanged()
+    }
+
+    fun shake(){
+        cards.shuffle()
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

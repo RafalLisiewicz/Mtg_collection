@@ -5,7 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Card::class], version = 1)
+@Database(entities = [Card::class], version = 2)
 abstract class CardDB : RoomDatabase(){
     abstract fun cardDao(): CardDao
 
@@ -15,6 +15,7 @@ abstract class CardDB : RoomDatabase(){
             if (instance == null) {
                 instance = Room.databaseBuilder(context,CardDB::class.java,"MyCards.db")
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build()
             }
             return instance as CardDB

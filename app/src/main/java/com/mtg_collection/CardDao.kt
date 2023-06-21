@@ -8,16 +8,16 @@ import androidx.room.Query
 @Dao
 interface CardDao {
     @Query("SELECT name FROM card")
-    fun getAllNames(): List<String>
+    fun getAllNames(): MutableList<String>
 
     @Query("SELECT * FROM card")
-    fun loadAll(): List<Card>
+    fun loadAll(): MutableList<Card>
 
     @Query("SELECT * FROM card WHERE name LIKE :name LIMIT 1")
     fun findByName(name: String): Card
 
     @Insert
-    fun insertAll(vararg cards: Card)
+    fun insert(vararg cards: Card)
 
     @Delete
     fun delete(card: Card)
