@@ -3,15 +3,18 @@ package com.mtg_collection
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.hardware.SensorManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.seismic.ShakeDetector
 import io.magicthegathering.kotlinsdk.model.card.MtgCard
 import kotlinx.coroutines.*
 
-class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
+class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>(){
 
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     private var onClickListener: CollectionAdapter.OnClickListener? = null
@@ -26,6 +29,7 @@ class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adap
         )
     }
 
+
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
         val curCard = cards[position]
         holder.itemView.apply {
@@ -37,6 +41,11 @@ class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adap
                 onClickListener!!.onClick(position, curCard)
             }
         }
+    }
+
+    fun shake(){
+        cards.shuffle()
+        notifyDataSetChanged()
     }
 
     fun setOnClickListener(onClickListener: OnClickListener) {
@@ -52,11 +61,6 @@ class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adap
         val dao = db.cardDao()
         dao.delete(card)
         cards.remove(card)
-        notifyDataSetChanged()
-    }
-
-    fun shake(){
-        cards.shuffle()
         notifyDataSetChanged()
     }
 

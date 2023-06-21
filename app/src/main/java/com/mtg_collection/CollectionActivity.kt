@@ -2,9 +2,6 @@ package com.mtg_collection
 
 import android.content.Context
 import android.content.Intent
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.StrictMode
@@ -16,11 +13,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.Math.sqrt
-import java.util.*
+import com.squareup.seismic.ShakeDetector
 
 
-class CollectionActivity : AppCompatActivity() {
+class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
 
     private lateinit var collectionAdapter: CollectionAdapter
     private lateinit var cards: MutableList<Card>
@@ -44,11 +40,26 @@ class CollectionActivity : AppCompatActivity() {
 
         goCardView()
 
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        val sd = ShakeDetector(this)
+        sd.start(sensorManager)
+    }
+
+    override fun hearShake() {
+        collectionAdapter.shake()
     }
 
 
     fun deleteCard(view: View) {
         collectionAdapter.deleteCard(this, curCard)
+
+        setContentView(R.layout.collection)
+        collectionAdapter = CollectionAdapter(cards)
+        val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItems)
+        rvCardItems.adapter = collectionAdapter
+        rvCardItems.layoutManager = LinearLayoutManager(this)
+
+        goCardView()
     }
 
     fun goBack(view: View){
