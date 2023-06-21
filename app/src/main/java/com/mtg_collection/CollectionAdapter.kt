@@ -1,23 +1,18 @@
 package com.mtg_collection
 
-
-import android.annotation.SuppressLint
 import android.content.Context
-import android.hardware.SensorManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.seismic.ShakeDetector
-import io.magicthegathering.kotlinsdk.model.card.MtgCard
-import kotlinx.coroutines.*
 
-class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>(){
+class CollectionAdapter(private val cards: MutableList<Card>) :
+    RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    private var onClickListener: CollectionAdapter.OnClickListener? = null
+
+    private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
         return CollectionViewHolder(
@@ -37,13 +32,13 @@ class CollectionAdapter(private val cards: MutableList<Card>): RecyclerView.Adap
             cardName.text = curCard.name
         }
         holder.itemView.setOnClickListener {
-            if(onClickListener != null){
+            if (onClickListener != null) {
                 onClickListener!!.onClick(position, curCard)
             }
         }
     }
 
-    fun shake(){
+    fun shake() {
         cards.shuffle()
         notifyDataSetChanged()
     }

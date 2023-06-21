@@ -15,15 +15,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    fun btnCollection(view: View){
+    fun btnCollection(view: View) {
         val intent = Intent(applicationContext, CollectionActivity::class.java)
         startActivity(intent)
         finish()
     }
-    fun btnBackMain(view: View){
+
+    fun btnBackMain(view: View) {
         setContentView(R.layout.activity_main)
     }
-    fun btnDatabase(view: View){
+
+    fun btnDatabase(view: View) {
         val intent = Intent(applicationContext, DatabaseActivity::class.java)
         startActivity(intent)
         finish()

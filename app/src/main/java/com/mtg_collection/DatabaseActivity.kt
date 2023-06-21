@@ -31,14 +31,14 @@ class DatabaseActivity : AppCompatActivity() {
     }
 
     @SuppressLint("MissingInflatedId")
-    fun cardSearch(view: View){
+    fun cardSearch(view: View) {
         val etCardName = findViewById<EditText>(R.id.etCardName)
         MainScope().launch {
             val cards = loader.getCardByName(etCardName.text.toString())
             setContentView(R.layout.card_search)
             if (cards != null) {
                 val cards = cards.toMutableList()
-                cards.removeAll {it.imageUrl == null}
+                cards.removeAll { it.imageUrl == null }
                 databaseAdapter = DatabaseAdapter(cards)
                 val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItemsI)
                 rvCardItems.adapter = databaseAdapter
@@ -49,17 +49,17 @@ class DatabaseActivity : AppCompatActivity() {
         }
     }
 
-    fun goBack(view: View){
+    fun goBack(view: View) {
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    fun goBackSearch(view: View){
+    fun goBackSearch(view: View) {
         setContentView(R.layout.database)
     }
 
-    fun goCardView(view: View){
+    fun goCardView(view: View) {
         databaseAdapter.setOnClickListener(object :
             DatabaseAdapter.OnClickListener {
             override fun onClick(position: Int, model: MtgCard) {
@@ -78,7 +78,9 @@ class DatabaseActivity : AppCompatActivity() {
                 cardField = findViewById(R.id.tvType)
                 cardField.text = model.type
                 cardField = findViewById(R.id.tvPower)
-                if(model.power==null){cardField.text = "None"} else {
+                if (model.power == null) {
+                    cardField.text = "None"
+                } else {
                     cardField.text = model.power + "/" + model.toughness
                 }
                 cardField = findViewById(R.id.tvMana)
@@ -90,12 +92,12 @@ class DatabaseActivity : AppCompatActivity() {
                     .with(image.context)
                     .load(model.imageUrl)
                     .centerCrop()
-                    .into(image);
+                    .into(image)
             }
         })
     }
 
-    fun addToDB(view: View){
+    fun addToDB(view: View) {
         databaseAdapter.addDB(this, card)
     }
 

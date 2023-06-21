@@ -1,19 +1,19 @@
-package com.mtg_collection;
+package com.mtg_collection
 
 import android.content.Context
-import androidx.room.Database;
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Card::class], version = 2)
-abstract class CardDB : RoomDatabase(){
+abstract class CardDB : RoomDatabase() {
     abstract fun cardDao(): CardDao
 
     companion object {
         private var instance: CardDB? = null
         fun getInstance(context: Context): CardDB {
             if (instance == null) {
-                instance = Room.databaseBuilder(context,CardDB::class.java,"MyCards.db")
+                instance = Room.databaseBuilder(context, CardDB::class.java, "MyCards.db")
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build()

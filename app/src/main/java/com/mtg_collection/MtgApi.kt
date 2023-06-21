@@ -12,13 +12,13 @@ import retrofit2.Response
 import java.util.Collections.addAll
 import kotlin.concurrent.thread
 
-class MtgApi{
+class MtgApi {
 
     fun getCardByName(name: String): List<MtgCard>? {
         var cards: List<MtgCard>? = null
-            val cardResponse: Response<List<MtgCard>> =
-                MtgCardApiClient.getCardsByPartialName(name, 10, 0)
-            cards = cardResponse.body()
+        val cardResponse: Response<List<MtgCard>> =
+            MtgCardApiClient.getCardsByPartialName(name, 10, 0)
+        cards = cardResponse.body()
         return cards
     }
 }

@@ -26,13 +26,16 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection)
 
+        //internet access
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
+        //database access
         val db = CardDB.getInstance(this)
         val dao = db.cardDao()
         cards = dao.loadAll()
 
+        //making list
         collectionAdapter = CollectionAdapter(cards)
         val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItems)
         rvCardItems.adapter = collectionAdapter
@@ -40,6 +43,7 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
 
         goCardView()
 
+        //sensor
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val sd = ShakeDetector(this)
         sd.start(sensorManager)
@@ -62,13 +66,13 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
         goCardView()
     }
 
-    fun goBack(view: View){
+    fun goBack(view: View) {
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    fun goBackSearch(view: View){
+    fun goBackSearch(view: View) {
         setContentView(R.layout.collection)
         collectionAdapter = CollectionAdapter(cards)
         val rvCardItems = findViewById<RecyclerView>(R.id.rvCardItems)
@@ -78,7 +82,7 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
         goCardView()
     }
 
-    fun goCardView(){
+    fun goCardView() {
         collectionAdapter.setOnClickListener(object :
             CollectionAdapter.OnClickListener {
             override fun onClick(position: Int, card: Card) {
@@ -86,8 +90,9 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
                 curCard = card
                 var button = findViewById<Button>(R.id.button3)
                 button.visibility = View.INVISIBLE
-                button = findViewById<Button>(R.id.buttonDelete)
+                button = findViewById(R.id.buttonDelete)
                 button.visibility = View.VISIBLE
+
                 var cardField = findViewById<TextView>(R.id.textView4)
                 cardField.text = card.name
                 cardField = findViewById(R.id.tvSet)
@@ -97,7 +102,9 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
                 cardField = findViewById(R.id.tvType)
                 cardField.text = card.type
                 cardField = findViewById(R.id.tvPower)
-                if(card.power=="null/null"){cardField.text = "None"} else {
+                if (card.power == "null/null") {
+                    cardField.text = "None"
+                } else {
                     cardField.text = card.power
                 }
                 cardField = findViewById(R.id.tvMana)
@@ -109,7 +116,7 @@ class CollectionActivity : AppCompatActivity(), ShakeDetector.Listener {
                     .with(image.context)
                     .load(card.imageUrl)
                     .centerCrop()
-                    .into(image);
+                    .into(image)
             }
         })
     }
