@@ -15,9 +15,9 @@ import kotlin.concurrent.thread
 class MtgApi {
 
     fun getCardByName(name: String): List<MtgCard>? {
-        var cards: List<MtgCard>? = null
+        var cards: List<MtgCard>?
         val cardResponse: Response<List<MtgCard>> =
-            MtgCardApiClient.getCardsByPartialName(name, 10, 0)
+            MtgCardApiClient.getCardsByPartialName(name, 20, 0)
         cards = cardResponse.body()
         return cards
     }
